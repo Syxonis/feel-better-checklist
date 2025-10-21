@@ -3,8 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fühl dich besser</title>
+  <title>Feel Better</title>
   <style>
+    /* Grundlegendes Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Schriftarten */
     body {
       font-family: 'Poppins', sans-serif;
       background: #f9f5f7;
@@ -12,84 +20,131 @@
       text-align: center;
       padding: 20px;
     }
+
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      color: #ff4d6d;
+    }
+
+    /* Kartenstil */
     .card {
       background: white;
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      max-width: 400px;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
       margin: auto;
+      transition: transform 0.3s ease;
     }
+
+    .card:hover {
+      transform: translateY(-10px);
+    }
+
+    /* Buttons */
     button {
       background: #ffb6c1;
       border: none;
-      padding: 10px 20px;
-      border-radius: 8px;
+      padding: 12px 24px;
+      border-radius: 10px;
       cursor: pointer;
       font-size: 16px;
       margin: 10px;
+      transition: background 0.3s ease;
     }
+
     button:hover {
       background: #ff9aae;
+    }
+
+    /* Checkbox-Stil */
+    input[type="checkbox"] {
+      margin-right: 10px;
+    }
+
+    /* Startseite */
+    .startseite {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .startseite button {
+      width: 80%;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 600px) {
+      .card {
+        padding: 20px;
+      }
+
+      button {
+        width: 100%;
+        font-size: 14px;
+      }
     }
   </style>
 </head>
 <body>
 
-<div class="card" id="app">
-  <h2>Wie fühlst du dich gerade?</h2>
-  <button onclick="next('schlecht')">Ich fühle mich schlecht :(</button>
-  <button onclick="next('okay')">Ich fühle mich okay :/</button>
-  <button onclick="next('super')">Ich fühle mich super! :)</button>
-</div>
+  <div class="card" id="app">
+    <div class="startseite">
+      <h2>Wie fühlst du dich gerade?</h2>
+      <button onclick="next('schlecht')">Ich fühl mich schlecht :(</button>
+      <button onclick="next('okay')">Ich fühl mich okay :/</button>
+      <button onclick="next('super')">Ich fühl mich super! :)</button>
+    </div>
+  </div>
 
-<script>
-const app = document.getElementById('app');
+  <script>
+    const app = document.getElementById('app');
 
-function next(step) {
-  if (step === 'schlecht') {
-    app.innerHTML = `
-      <h2>Was fühlt sich schlecht an?</h2>
-      <button onclick="next('muedigkeit')">Müdigkeit</button>
-      <button onclick="next('selbstzweifel')">Selbstzweifel</button>
-      <button onclick="next('stress')">Stress</button>
-    `;
-  } else if (step === 'muedigkeit') {
-    app.innerHTML = `
-      <h2>Vielleicht hilft das hier:</h2>
-      <label><input type="checkbox"> Ein kurzes Nickerchen</label><br>
-      <label><input type="checkbox"> Ein Glas Wasser trinken</label><br>
-      <label><input type="checkbox"> Ein bisschen dehnen</label><br><br>
-      <button onclick="restart()">Neu starten</button>
-    `;
-  } else if (step === 'selbstzweifel') {
-    app.innerHTML = `
-      <h2>Du bist wundervoll. Vielleicht hilft das hier:</h2>
-      <label><input type="checkbox"> Eine Dusche nehmen</label><br>
-      <label><input type="checkbox"> Drei nette Dinge über dich sagen</label><br>
-      <label><input type="checkbox"> Dein Lieblingslied hören</label><br><br>
-      <button onclick="restart()">Neu starten</button>
-    `;
-  } else if (step === 'stress') {
-    app.innerHTML = `
-      <h2>Atme tief durch</h2>
-      <label><input type="checkbox"> Atme 4 Sekunden ein, 6 Sekunden aus</label><br>
-      <label><input type="checkbox"> Schreibe auf, was dich belastet</label><br>
-      <label><input type="checkbox"> Einen kurzen Spaziergang machen</label><br><br>
-      <button onclick="restart()">Neu starten</button>
-    `;
-  } else {
-    app.innerHTML = `
-      <h2>Das ist gut! Kümmere dich weiterhin um dich selbst</h2>
-      <button onclick="restart()">Neu starten</button>
-    `;
-  }
-}
+    function next(step) {
+      if (step === 'schlecht') {
+        app.innerHTML = `
+          <h2>Was fühlt sich schlecht an?</h2>
+          <button onclick="next('tired')">Müde</button>
+          <button onclick="next('self')">Schlecht über mich selbst</button>
+          <button onclick="next('stressed')">Gestresst</button>
+        `;
+      } else if (step === 'tired') {
+        app.innerHTML = `
+          <h2>Vielleicht hilft ein Nickerchen oder eine Dusche</h2>
+          <label><input type="checkbox"> Ein Nickerchen machen</label><br>
+          <label><input type="checkbox"> Etwas Wasser trinken</label><br>
+          <label><input type="checkbox"> Ein bisschen dehnen</label><br><br>
+          <button onclick="restart()">Neu starten</button>
+        `;
+      } else if (step === 'self') {
+        app.innerHTML = `
+          <h2>Du bist wunderbar. Vielleicht versuchst du eines davon</h2>
+          <label><input type="checkbox"> Eine Dusche nehmen</label><br>
+          <label><input type="checkbox"> 3 nette Dinge über dich selbst sagen</label><br>
+          <label><input type="checkbox"> Dein Lieblingslied hören</label><br><br>
+          <button onclick="restart()">Neu starten</button>
+        `;
+      } else if (step === 'stressed') {
+        app.innerHTML = `
+          <h2>Tiefe Atmung</h2>
+          <label><input type="checkbox"> 4 Sekunden einatmen, 6 Sekunden ausatmen</label><br>
+          <label><input type="checkbox"> Aufschreiben, was dich belastet</label><br>
+          <label><input type="checkbox"> Einen kurzen Spaziergang machen</label><br><br>
+          <button onclick="restart()">Neu starten</button>
+        `;
+      } else {
+        app.innerHTML = `
+          <h2>Das ist gut! Kümmere dich weiterhin um dich selbst</h2>
+          <button onclick="restart()">Neu starten</button>
+        `;
+      }
+    }
 
-function restart() {
-  location.reload();
-}
-</script>
+    function restart() {
+      location.reload();
+    }
+  </script>
 
 </body>
 </html>
