@@ -1,63 +1,87 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Feel Better 🌷</title>
-<style>
-  body { font-family: 'Poppins', sans-serif; background: #f9f5f7; color: #333; text-align: center; padding: 20px; }
-  .card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); max-width: 400px; margin: auto; }
-  button { background: #ffb6c1; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 16px; margin: 10px; }
-  button:hover { background: #ff9aae; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fühl dich besser</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f9f5f7;
+      color: #333;
+      text-align: center;
+      padding: 20px;
+    }
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      max-width: 400px;
+      margin: auto;
+    }
+    button {
+      background: #ffb6c1;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      margin: 10px;
+    }
+    button:hover {
+      background: #ff9aae;
+    }
+  </style>
 </head>
 <body>
 
 <div class="card" id="app">
-  <h2>Hey, how are you feeling?</h2>
-  <button onclick="next('bad')">I feel bad</button>
-  <button onclick="next('okay')">I'm okay</button>
+  <h2>Wie fühlst du dich gerade?</h2>
+  <button onclick="next('schlecht')">Ich fühle mich schlecht :(</button>
+  <button onclick="next('okay')">Ich fühle mich okay :/</button>
+  <button onclick="next('super')">Ich fühle mich super! :)</button>
 </div>
 
 <script>
 const app = document.getElementById('app');
 
 function next(step) {
-  if (step === 'bad') {
+  if (step === 'schlecht') {
     app.innerHTML = `
-      <h2>What kind of bad feeling?</h2>
-      <button onclick="next('tired')">Tired</button>
-      <button onclick="next('self')">Bad about myself</button>
-      <button onclick="next('stressed')">Stressed</button>
+      <h2>Was fühlt sich schlecht an?</h2>
+      <button onclick="next('muedigkeit')">Müdigkeit</button>
+      <button onclick="next('selbstzweifel')">Selbstzweifel</button>
+      <button onclick="next('stress')">Stress</button>
     `;
-  } else if (step === 'tired') {
+  } else if (step === 'muedigkeit') {
     app.innerHTML = `
-      <h2>Maybe a nap or a shower could help 🛁</h2>
-      <label><input type="checkbox"> Take a nap</label><br>
-      <label><input type="checkbox"> Drink some water</label><br>
-      <label><input type="checkbox"> Stretch a bit</label><br><br>
-      <button onclick="restart()">Start over</button>
+      <h2>Vielleicht hilft das hier:</h2>
+      <label><input type="checkbox"> Ein kurzes Nickerchen</label><br>
+      <label><input type="checkbox"> Ein Glas Wasser trinken</label><br>
+      <label><input type="checkbox"> Ein bisschen dehnen</label><br><br>
+      <button onclick="restart()">Neu starten</button>
     `;
-  } else if (step === 'self') {
+  } else if (step === 'selbstzweifel') {
     app.innerHTML = `
-      <h2>You’re wonderful. Maybe try one of these</h2>
-      <label><input type="checkbox"> Take a shower</label><br>
-      <label><input type="checkbox"> Say 3 nice things about yourself</label><br>
-      <label><input type="checkbox"> Listen to your favorite song</label><br><br>
-      <button onclick="restart()">Start over</button>
+      <h2>Du bist wundervoll. Vielleicht hilft das hier:</h2>
+      <label><input type="checkbox"> Eine Dusche nehmen</label><br>
+      <label><input type="checkbox"> Drei nette Dinge über dich sagen</label><br>
+      <label><input type="checkbox"> Dein Lieblingslied hören</label><br><br>
+      <button onclick="restart()">Neu starten</button>
     `;
-  } else if (step === 'stressed') {
+  } else if (step === 'stress') {
     app.innerHTML = `
-      <h2>Deep breath</h2>
-      <label><input type="checkbox"> Breathe in for 4s, out for 6s</label><br>
-      <label><input type="checkbox"> Write down what’s bothering you</label><br>
-      <label><input type="checkbox"> Take a short walk</label><br><br>
-      <button onclick="restart()">Start over</button>
+      <h2>Atme tief durch</h2>
+      <label><input type="checkbox"> Atme 4 Sekunden ein, 6 Sekunden aus</label><br>
+      <label><input type="checkbox"> Schreibe auf, was dich belastet</label><br>
+      <label><input type="checkbox"> Einen kurzen Spaziergang machen</label><br><br>
+      <button onclick="restart()">Neu starten</button>
     `;
   } else {
     app.innerHTML = `
-      <h2>That’s good! Keep taking care of yourself</h2>
-      <button onclick="restart()">Start over</button>
+      <h2>Das ist gut! Kümmere dich weiterhin um dich selbst</h2>
+      <button onclick="restart()">Neu starten</button>
     `;
   }
 }
