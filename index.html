@@ -34,7 +34,7 @@
       border-radius: 20px;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
       max-width: 500px;
-      margin: auto;
+      margin: 20px auto;
       transition: transform 0.3s ease;
     }
 
@@ -63,6 +63,12 @@
       margin-right: 10px;
     }
 
+    label {
+      display: block;
+      margin: 10px 0;
+      text-align: left;
+    }
+
     /* Startseite */
     .startseite {
       display: flex;
@@ -89,60 +95,213 @@
 </head>
 <body>
 
-  <div class="card" id="app">
+  <!-- Erste Karte: Gefühle -->
+  <div class="card" id="gefuehle-card">
     <div class="startseite">
       <h2>Wie fühlst du dich gerade?</h2>
-      <button onclick="next('schlecht')">Ich fühl mich schlecht :(</button>
-      <button onclick="next('okay')">Ich fühl mich okay :/</button>
-      <button onclick="next('super')">Ich fühl mich super! :)</button>
+      <button onclick="handleGefuehl('schlecht')">Ich fühl mich schlecht :(</button>
+      <button onclick="handleGefuehl('okay')">Ich fühl mich okay :/</button>
+      <button onclick="handleGefuehl('super')">Ich fühl mich super! :)</button>
     </div>
   </div>
 
-  <script>
-    const app = document.getElementById('app');
+  <!-- Zweite Karte: Rausgehen -->
+  <div class="card" id="rausgehen-card">
+    <h2>Soll ich heute rausgehen?</h2>
+    <button onclick="handleRausgehen('ja')">Ich möchte rausgehen</button>
+    <button onclick="handleRausgehen('nein')">Ich möchte nicht rausgehen</button>
+    <button onclick="handleRausgehen('weiss-nicht')">Ich weiß es nicht</button>
+  </div>
 
-    function next(step) {
-      if (step === 'schlecht') {
-        app.innerHTML = `
+  <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 15px; text-align: center; margin-top: 20px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); max-width: 500px; margin: 20px auto;">
+    <p style="margin: 0; font-size: 14px; font-weight: 500;">Gesponsert von Debra Morgan Farms INC und Subsidiarys</p>
+  </div>
+
+  <script>
+    const gefuehleCard = document.getElementById('gefuehle-card');
+    const rausgehenCard = document.getElementById('rausgehen-card');
+
+    function handleGefuehl(gefuehl) {
+      if (gefuehl === 'schlecht') {
+        gefuehleCard.innerHTML = `
           <h2>Was fühlt sich schlecht an?</h2>
-          <button onclick="next('tired')">Müde</button>
-          <button onclick="next('self')">Schlecht über mich selbst</button>
-          <button onclick="next('stressed')">Gestresst</button>
+          <button onclick="handleProblem('tired')">Müde</button>
+          <button onclick="handleProblem('self')">Schlecht über mich selbst</button>
+          <button onclick="handleProblem('stressed')">Gestresst</button>
+          <button onclick="muenzeWerfenGefuehl()">Münze werfen</button>
+          <div id="muenze-ergebnis-gefuehl" style="margin: 20px 0; font-size: 1.2rem; font-weight: bold;"></div>
         `;
-      } else if (step === 'tired') {
-        app.innerHTML = `
-          <h2>Vielleicht hilft ein Nickerchen oder eine Dusche</h2>
-          <label><input type="checkbox"> Ein Nickerchen machen</label><br>
-          <label><input type="checkbox"> Etwas Wasser trinken</label><br>
-          <label><input type="checkbox"> Ein bisschen dehnen</label><br><br>
-          <button onclick="restart()">Neu starten</button>
-        `;
-      } else if (step === 'self') {
-        app.innerHTML = `
-          <h2>Du bist wunderbar. Vielleicht versuchst du eines davon</h2>
-          <label><input type="checkbox"> Eine Dusche nehmen</label><br>
-          <label><input type="checkbox"> 3 nette Dinge über dich selbst sagen</label><br>
-          <label><input type="checkbox"> Dein Lieblingslied hören</label><br><br>
-          <button onclick="restart()">Neu starten</button>
-        `;
-      } else if (step === 'stressed') {
-        app.innerHTML = `
-          <h2>Tiefe Atmung</h2>
-          <label><input type="checkbox"> 4 Sekunden einatmen, 6 Sekunden ausatmen</label><br>
-          <label><input type="checkbox"> Aufschreiben, was dich belastet</label><br>
-          <label><input type="checkbox"> Einen kurzen Spaziergang machen</label><br><br>
-          <button onclick="restart()">Neu starten</button>
-        `;
-      } else {
-        app.innerHTML = `
+      } else if (gefuehl === 'okay') {
+        gefuehleCard.innerHTML = `
           <h2>Das ist gut! Kümmere dich weiterhin um dich selbst</h2>
-          <button onclick="restart()">Neu starten</button>
+          <button onclick="restartGefuehle()">Neu starten</button>
+        `;
+      } else if (gefuehl === 'super') {
+        gefuehleCard.innerHTML = `
+          <h2>Das ist großartig! Weiter so!</h2>
+          <button onclick="restartGefuehle()">Neu starten</button>
         `;
       }
     }
 
-    function restart() {
-      location.reload();
+    function handleProblem(problem) {
+      if (problem === 'tired') {
+        gefuehleCard.innerHTML = `
+          <h2>Vielleicht hilft ein Nickerchen oder eine Dusche</h2>
+          <label><input type="checkbox"> Ein Nickerchen machen</label>
+          <label><input type="checkbox"> Etwas Wasser trinken</label>
+          <label><input type="checkbox"> Ein bisschen dehnen</label>
+          <br><br>
+          <button onclick="restartGefuehle()">Neu starten</button>
+        `;
+      } else if (problem === 'self') {
+        gefuehleCard.innerHTML = `
+          <h2>Du bist wunderbar. Vielleicht versuchst du eines davon</h2>
+          <label><input type="checkbox"> Eine Dusche nehmen</label>
+          <label><input type="checkbox"> 3 nette Dinge über dich selbst sagen</label>
+          <label><input type="checkbox"> Dein Lieblingslied hören</label>
+          <br><br>
+          <button onclick="restartGefuehle()">Neu starten</button>
+        `;
+      } else if (problem === 'stressed') {
+        gefuehleCard.innerHTML = `
+          <h2>Tiefe Atmung</h2>
+          <label><input type="checkbox"> 4 Sekunden einatmen, 6 Sekunden ausatmen</label>
+          <label><input type="checkbox"> Aufschreiben, was dich belastet</label>
+          <label><input type="checkbox"> Einen kurzen Spaziergang machen</label>
+          <br><br>
+          <button onclick="restartGefuehle()">Neu starten</button>
+        `;
+      }
+    }
+
+    function handleRausgehen(antwort) {
+      if (antwort === 'ja') {
+        rausgehenCard.innerHTML = `
+          <h2>Super! Auf in die Kneipe!</h2>
+          <label><input type="checkbox"> Freunde anrufen</label>
+          <label><input type="checkbox"> Lieblingsoutfit anziehen</label>
+          <label><input type="checkbox"> Gute Musik auf dem Weg hören</label>
+          <br><br>
+          <button onclick="restartRausgehen()">Neu starten</button>
+        `;
+      } else if (antwort === 'nein') {
+        rausgehenCard.innerHTML = `
+          <h2>Kein Problem! Gemütlich zu Hause bleiben.</h2>
+          <label><input type="checkbox"> Ein gutes Buch lesen</label>
+          <label><input type="checkbox"> Einen Film schauen</label>
+          <label><input type="checkbox"> Hayday grinden (Der Derpy gewinnt sich nicht von alleine)</label>
+          <br><br>
+          <button onclick="restartRausgehen()">Neu starten</button>
+        `;
+      } else if (antwort === 'weiss-nicht') {
+        rausgehenCard.innerHTML = `
+          <h2>Lass uns das herausfinden!</h2>
+          <button onclick="handleWeissNicht('muede')">Ich bin müde</button>
+          <button onclick="handleWeissNicht('geld')">Ich will kein Geld ausgeben</button>
+          <button onclick="handleWeissNicht('alleine')">Ich will nicht alleine gehen</button>
+          <button onclick="handleWeissNicht('unentschlossen')">Ich bin einfach unentschlossen</button>
+        `;
+      }
+    }
+
+    function handleWeissNicht(grund) {
+      if (grund === 'muede') {
+        rausgehenCard.innerHTML = `
+          <h2>Wenn du müde bist, vielleicht...</h2>
+          <label><input type="checkbox"> Ein kurzes Nickerchen machen</label>
+          <label><input type="checkbox"> Nur für ein Getränk vorbeischauen</label>
+          <label><input type="checkbox"> Heute lieber zu Hause bleiben</label>
+          <br><br>
+          <button onclick="restartRausgehen()">Neu starten</button>
+        `;
+      } else if (grund === 'geld') {
+        rausgehenCard.innerHTML = `
+          <h2>Geld sparen ist wichtig!</h2>
+          <label><input type="checkbox"> Nur ein oder zwei Getränke</label>
+          <label><input type="checkbox"> Happy Hour nutzen</label>
+          <label><input type="checkbox"> Heute lieber sparen</label>
+          <br><br>
+          <button onclick="restartRausgehen()">Neu starten</button>
+        `;
+      } else if (grund === 'alleine') {
+        rausgehenCard.innerHTML = `
+          <h2>Gesellschaft macht mehr Spaß!</h2>
+          <label><input type="checkbox"> Freunde fragen, ob sie mitkommen</label>
+          <label><input type="checkbox"> In der Kneipe neue Leute kennenlernen</label>
+          <label><input type="checkbox"> Heute lieber zu Hause bleiben</label>
+          <br><br>
+          <button onclick="restartRausgehen()">Neu starten</button>
+        `;
+      } else if (grund === 'unentschlossen') {
+        rausgehenCard.innerHTML = `
+          <h2>Manchmal hilft es, eine Münze zu werfen!</h2>
+          <button onclick="muenzeWerfen()">🪙 Münze werfen</button>
+          <div id="muenze-ergebnis" style="margin: 20px 0; font-size: 1.2rem; font-weight: bold;"></div>
+          <label><input type="checkbox"> Einfach spontan entscheiden</label>
+          <label><input type="checkbox"> Nur kurz vorbeischauen</label>
+          <label><input type="checkbox"> Für heute absagen und morgen neu überlegen</label>
+          <br><br>
+          <button onclick="restartRausgehen()">Neu starten</button>
+        `;
+      }
+    }
+
+    function restartGefuehle() {
+      gefuehleCard.innerHTML = `
+        <div class="startseite">
+          <h2>Wie fühlst du dich gerade?</h2>
+          <button onclick="handleGefuehl('schlecht')">Ich fühl mich schlecht :(</button>
+          <button onclick="handleGefuehl('okay')">Ich fühl mich okay :/</button>
+          <button onclick="handleGefuehl('super')">Ich fühl mich super! :)</button>
+        </div>
+      `;
+    }
+
+    function restartRausgehen() {
+      rausgehenCard.innerHTML = `
+        <h2>Soll ich heute rausgehen?</h2>
+        <button onclick="handleRausgehen('ja')">Ich möchte rausgehen</button>
+        <button onclick="handleRausgehen('nein')">Ich möchte nicht rausgehen</button>
+        <button onclick="handleRausgehen('weiss-nicht')">Ich weiß es nicht</button>
+      `;
+    }
+
+    function muenzeWerfenGefuehl() {
+      const optionen = ['Müde', 'Schlecht über mich selbst', 'Gestresst'];
+      const ergebnis = optionen[Math.floor(Math.random() * optionen.length)];
+      document.getElementById('muenze-ergebnis-gefuehl').textContent = 'Ergebnis: ' + ergebnis;
+    }
+
+    function muenzeWerfenRaus() {
+      const optionen = ['Ich bin müde', 'Ich will kein Geld ausgeben', 'Ich will nicht alleine gehen', 'Ich bin einfach unentschlossen'];
+      const ergebnis = optionen[Math.floor(Math.random() * optionen.length)];
+      document.getElementById('muenze-ergebnis-raus').textContent = 'Ergebnis: ' + ergebnis;
+    }
+
+    function muenzeWerfenMuede() {
+      const ergebnis = Math.random() < 0.5 ? 'Geh in die Kneipe!' : 'Bleib zu Hause!';
+      document.getElementById('muenze-ergebnis-muede').textContent = ergebnis;
+    }
+
+    function muenzeWerfenGeld() {
+      const ergebnis = Math.random() < 0.5 ? 'Geh in die Kneipe!' : 'Bleib zu Hause!';
+      document.getElementById('muenze-ergebnis-geld').textContent = ergebnis;
+    }
+
+    function muenzeWerfenAlleine() {
+      const ergebnis = Math.random() < 0.5 ? 'Geh in die Kneipe!' : 'Bleib zu Hause!';
+      document.getElementById('muenze-ergebnis-alleine').textContent = ergebnis;
+    }
+
+    function muenzeWerfenUnentschlossen() {
+      const ergebnis = Math.random() < 0.5 ? 'Geh in die Kneipe!' : 'Bleib zu Hause!';
+      document.getElementById('muenze-ergebnis-unentschlossen').textContent = ergebnis;
+    }
+
+    function muenzeWerfen() {
+      const ergebnis = Math.random() < 0.5 ? 'Geh in die Kneipe!' : 'Bleib zu Hause!';
+      document.getElementById('muenze-ergebnis').textContent = ergebnis;
     }
   </script>
 
